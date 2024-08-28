@@ -20,6 +20,7 @@ import { authFormSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { signIn, signUp } from '@/lib/actions/user.actions'
+import PlaidLink from './PlaidLink'
 
 
 
@@ -43,8 +44,23 @@ const AuthForm = ({ type }: { type: string }) => {
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         setIsLoading(true);
         try {
+
+
+            const userData = {
+                firstName: data.firstname!,
+                lastName: data.lastname!,
+                address1: data.address1!,
+                city: data.city!,
+                state: data.state!,
+                postalCode: data.postalCode!,
+                dateOfBirth: data.dateOfBirth!,
+                ssn: data.ssn!,
+                email: data.email,
+                password: data.password
+            }
+
             if (type === 'sign-up') {
-                const newUser = await signUp(data);
+                const newUser = await signUp(userData);
                 setUser(newUser);
             }
             else if (type === 'sign-in') {
@@ -80,9 +96,9 @@ const AuthForm = ({ type }: { type: string }) => {
             </header>
             {user ? (
                 <div className='flex flex-col gap-4'>
-                    {/* PlaidLink */}
+                    <PlaidLink user={user} variant="primary" />
                 </div>
-            ) : (
+             ) : ( 
                 <>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -140,7 +156,7 @@ const AuthForm = ({ type }: { type: string }) => {
                                             control={form.control}
                                             name='dateOfBirth'
                                             label='Date of Birth'
-                                            placeholder='MM-DD-YYYY'
+                                            placeholder='YYYY-MM-DD'
                                         />
 
                                         <CustomInput
@@ -188,7 +204,7 @@ const AuthForm = ({ type }: { type: string }) => {
                         </Link>
                     </footer>
                 </>
-            )}
+             )}
         </section>
     )
 }
