@@ -12,7 +12,7 @@ const Home = async ({searchParams: {id, page}}: SearchParamProps) => {
 
   if(!loggedIn?.$id) return;
   
-  const accounts = await getAccounts({userId: loggedIn.$id})
+  const accounts = await getAccounts({userId: loggedIn.$id});
 
   if(!accounts) return;
   const accountsData = accounts?.data;
