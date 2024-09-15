@@ -11,7 +11,7 @@ const RecentTransactions = ({
     transactions = [],
     appwriteItemId,
     page = 1
-}) => {
+}: RecentTransactionsProps) => {
     return (
         <section className='recent-transactions'>
             <header className='flex items-center justify-between'>
